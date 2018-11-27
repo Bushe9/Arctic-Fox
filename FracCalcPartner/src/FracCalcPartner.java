@@ -4,18 +4,18 @@ public class FracCalcPartner {
 
 	public static void main(String[] args) {
 		// TODO: Read the input from the user and call produceAnswer with an equation
-		produceAnswer("1/2 + 1/2");
-		//System.out.print("Please enter an expression: ");
-		//Scanner console = new Scanner(System.in);
-		//while (console.hasNextLine()) {
+		
+		System.out.print("Please enter an expression: ");
+		Scanner console = new Scanner(System.in);
+		while (console.hasNextLine()) {
 			
-			//String input = console.nextLine();
-			//if (input.equals("quit")) {
-			//	break;
+			String input = console.nextLine();
+			if (input.equals("quit")) {
+				break;
 			}
-		//}
-		//console.close();
-	//}
+		}
+		console.close();
+	}
 
 	// ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
 	// This function takes a String 'input' and produces the result
@@ -49,32 +49,7 @@ public class FracCalcPartner {
 
 			}
 		}
-		/*if(input.contains("+")) {
-			if(input.contains("_")) {
-				System.out.print(input.substring(0, input.indexOf('_')));
-				int whole1 = Integer.parseInt(input.substring(0, input.indexOf('_')));
-				System.out.print("_");
-				System.out.print(input.substring(input.indexOf('_') + 1, input.indexOf('/')));
-				int numerator1 = Integer.parseInt(input.substring(input.indexOf('_') + 1, input.indexOf('/')));
-				System.out.print("/");
-				System.out.println(input.substring(input.indexOf('/') + 1, input.length()));
-				int denominator1 = Integer.parseInt(input.substring(input.indexOf('/') + 1, input.length()));
-				int whole2 = Integer.parseInt(input.substring(input.indexOf('+') + 1, input.lastIndexOf('_')));
-				int numerator2 = Integer.parseInt(input.substring(input.lastIndexOf('_') + 1, input.lastIndexOf('/'))); 
-				int denominator2 = 
-				System.out.print("");
-
-	} else if(input.contains("/")){
-		System.out.print(input.substring(0,input.indexOf('/')));
-		int numerator = Integer.parseInt(input.substring(0,input.indexOf('/')));
-		System.out.print("/");
-		System.out.println(input.substring(input.indexOf('/') + 1, input.length()));
-		int denominator = Integer.parseInt(input.substring(input.indexOf('/') + 1, input.length()));
-	} else {
-		System.out.println(input.substring(0,input.length()));
-		int whole = Integer.parseInt(input.substring(0, input.indexOf('_')));
-	}*/
-		//passer.close();
+		
 		return null;
 	}
 
@@ -119,5 +94,30 @@ public class FracCalcPartner {
 		}
 	}
 }
+/*if(input.contains("+")) {
+if(input.contains("_")) {
+	System.out.print(input.substring(0, input.indexOf('_')));
+	int whole1 = Integer.parseInt(input.substring(0, input.indexOf('_')));
+	System.out.print("_");
+	System.out.print(input.substring(input.indexOf('_') + 1, input.indexOf('/')));
+	int numerator1 = Integer.parseInt(input.substring(input.indexOf('_') + 1, input.indexOf('/')));
+	System.out.print("/");
+	System.out.println(input.substring(input.indexOf('/') + 1, input.length()));
+	int denominator1 = Integer.parseInt(input.substring(input.indexOf('/') + 1, input.length()));
+	int whole2 = Integer.parseInt(input.substring(input.indexOf('+') + 1, input.lastIndexOf('_')));
+	int numerator2 = Integer.parseInt(input.substring(input.lastIndexOf('_') + 1, input.lastIndexOf('/'))); 
+	int denominator2 = 
+	System.out.print("");
 
+} else if(input.contains("/")){
+System.out.print(input.substring(0,input.indexOf('/')));
+int numerator = Integer.parseInt(input.substring(0,input.indexOf('/')));
+System.out.print("/");
+System.out.println(input.substring(input.indexOf('/') + 1, input.length()));
+int denominator = Integer.parseInt(input.substring(input.indexOf('/') + 1, input.length()));
+} else {
+System.out.println(input.substring(0,input.length()));
+int whole = Integer.parseInt(input.substring(0, input.indexOf('_')));
+}*/
+//passer.close();
 
