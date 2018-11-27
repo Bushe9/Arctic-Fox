@@ -4,16 +4,18 @@ public class FracCalcPartner {
 
 	public static void main(String[] args) {
 		// TODO: Read the input from the user and call produceAnswer with an equation
-		Scanner console = new Scanner(System.in);
-		System.out.print("Please enter an expression: ");
-		while (console.hasNextLine()) {
-
-			String input = console.nextLine();
-			if (input.equals("quit")) {
-				break;
+		produceAnswer("1/2 + 1/2");
+		//System.out.print("Please enter an expression: ");
+		//Scanner console = new Scanner(System.in);
+		//while (console.hasNextLine()) {
+			
+			//String input = console.nextLine();
+			//if (input.equals("quit")) {
+			//	break;
 			}
-		}
-	}
+		//}
+		//console.close();
+	//}
 
 	// ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
 	// This function takes a String 'input' and produces the result
