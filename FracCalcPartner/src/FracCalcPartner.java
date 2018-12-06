@@ -4,78 +4,93 @@ public class FracCalcPartner {
 
 	public static void main(String[] args) {
 		// TODO: Read the input from the user and call produceAnswer with an equation
-		
-		System.out.print("Please enter an expression: ");
 		Scanner console = new Scanner(System.in);
+		System.out.print("Please enter an expression: ");
 		while (console.hasNextLine()) {
-			
+
 			String input = console.nextLine();
 			if (input.equals("quit")) {
 				break;
+			} else {
+				System.out.println(produceAnswer(input));
 			}
 		}
-		console.close();
 	}
 
-	// ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
-	// This function takes a String 'input' and produces the result
-	//
-	// input is a fraction string that needs to be evaluated.  For your program, this will be the user input.
-	//      e.g. input ==> "1/2 + 3/4"
-	//        
-	// The function should return the result of the fraction after it has been calculated
-	//      e.g. return ==> "1_1/4"
 	public static String produceAnswer(String input) { 
-		// TODO: Implement this function to produce the solution to the input
 		Scanner passer = new Scanner(input);
 		String frac1 = passer.next();
 		String symbol = passer.next();
 		String frac2 = passer.next();
-		int whole1 = wholeNum1(frac1);
-		int whole2 = wholeNum2(frac2);
+		int whole1 = wholeNum(frac1);
+		int whole2 = wholeNum(frac2);
 		int numerator1 = numerNum(frac1);
 		int numerator2 = numerNum(frac2);
 		int denominator1 = denomNum(frac1);
 		int denominator2 = denomNum(frac2);
 		if (symbol.contains("+")) {
-			int wholeAns = whole1 + whole2;
-			if (denominator1 == denominator2) {
-				int numeratorAns = numerator1 + numerator2;
-			} else {
-				numerator2 *= denominator1;
-				numerator1 *= denominator2;
-				denominator1 *= denominator2;
-				denominator2 = denominator1;
+			int wholeAns = wholeAnsAdd(whole1, symbol, whole2);
+			int numerAns = numerAnsAdd(numerator1, denominator1, symbol, numerator2, denominator2);
+			int denomAns = denomAnsAdd(denominator1, symbol, denominator2);
+			if(numerAns == denomAns) {
+				if (symbol.contains("-")) {
+					return (numerAns / denomAns) - wholeAns + "";
+				} else if(symbol.contains("+")) {
+					return (numerAns / denomAns) + wholeAns + "";
+				}
+				if (numerAns == 0) {
+					return wholeAns + "";
+				}
+				if (numerAns >= denomAns) {
+					if (symbol.contains("+")) {
+						wholeAns += (numerAns / denomAns);
+						numerAns = numerAns % denomAns;
+						if (numerAns == 0) {
+							return wholeAns + "";
+						}	
 
+					}
+				} else if (symbol.contains("-")) {
+					wholeAns += (numerAns / denomAns);
+					numerAns = numerAns % denomAns;
+					if (numerAns == 0) {
+						return wholeAns + "";
+					}
+				}
+				if (wholeAns != 0) {
+					return wholeAns + "_" + numerAns + "/" + denomAns; 
+				} else { 
+					return numerAns + "/" + denomAns;
+				}
+			}
+		} else if (symbol.contains("-")) {
+			
+		} else if (symbol.contains("*")) {
+			int wholeAns;
+			int numerAns = numerAnsMult(whole1, numerator1, denominator1, symbol, whole2, numerator2, denominator2);
+			int denomAns = denomAnsMult(denominator1, symbol, whole2, numerator2, denominator2);
+			if (numerAns >= denomAns) {
+				wholeAns = (numerAns / denomAns);
+				numerAns = numerAns % denomAns;
+				if (numerAns == 0) {
+					return wholeAns + "";
+				} else {
+					return numerAns + "/" + denomAns;
+				}
+			} else {
+				return numerAns + "/" + denomAns;
 			}
 		}
-		
 		return null;
 	}
 
-	public static int wholeNum1(String frac) {
+	public static int wholeNum(String frac) {
 		if (frac.contains("_")) {
 			return Integer.parseInt(frac.substring(0, frac.indexOf("_")));
 		} else if (!frac.contains("/")) {
-			if (frac.contains("+")) {
-				return Integer.parseInt(frac.substring(0, frac.indexOf("+")));
-			} else {
-				return 0;
-
-			}
-
+			return Integer.parseInt(frac.substring(0, frac.length()));
 		}
 		return 0;
-	}
-
-	public static int wholeNum2(String frac) {
-		if (frac.contains("_")) {
-			return Integer.parseInt(frac.substring(0, frac.indexOf("_")));
-		} else if (!frac.contains("/")) {
-			return Integer.parseInt(frac.substring(0, frac.indexOf("+")));
-		} else {
-			return 0;
-		}
 	}
 
 	public static int numerNum(String frac) {
@@ -84,6 +99,7 @@ public class FracCalcPartner {
 		} else {
 			return 0;
 		}
+
 	}
 
 	public static int denomNum(String frac) {
@@ -92,32 +108,67 @@ public class FracCalcPartner {
 		} else {
 			return 1;
 		}
+
+	}
+
+	public static int wholeAnsAdd(int whole1, String symbol, int whole2) {
+		if (symbol.contains("+")) {
+			return whole1 + whole2;
+		} else if (symbol.contains("-")) {
+			if (whole2 < 0) {
+				whole2 = Math.abs(whole2);
+				return whole1 + whole2;
+			} else {
+				return whole1 - whole2;
+			} 
+		}
+		return 0;
+	}
+
+	public static int numerAnsAdd(int numer1, int denom1, String symbol, int numer2, int denom2) {
+		if (denom1 == denom2) {
+			if (symbol.contains("+")) {
+				return numer1 + numer2;
+			} else if (symbol.contains("-")) {
+				return numer1 - numer2;
+			} 
+		} else {
+			numer2 *= denom1;
+			numer1 *= denom2;
+			if (symbol.contains("+")) {
+				return numer1 + numer2;
+			} else if (symbol.contains("-")) {
+				return numer1 - numer2;
+			}
+		}
+		return 0;
+	}
+
+	public static int denomAnsAdd(int denom1, String symbol, int denom2) {
+		if (denom1 == denom2) {
+			return denom1;
+		} else {
+			return denom1 * denom2;
+		}
+	}
+
+	public static int numerAnsMult(int whole1, int numer1, int denom1, String symbol, int whole2, int numer2, int denom2) {
+		numer1 = (denom1 * whole1) + numer1;
+		numer2 = (denom2 * whole2) + numer2;
+		if (symbol.contains("*")) {
+			return numer1 * numer2;
+		} else { 
+			return numer1 * denom2;
+		}
+	}
+
+	public static int denomAnsMult(int denom1, String symbol, int whole2, int numer2, int denom2) {
+		if (symbol.contains("*") ) {
+			return denom1 * denom2;
+		} else {
+			numer2 = (denom2 * whole2) + numer2;
+			return denom1 * numer2;
+		}
 	}
 }
-/*if(input.contains("+")) {
-if(input.contains("_")) {
-	System.out.print(input.substring(0, input.indexOf('_')));
-	int whole1 = Integer.parseInt(input.substring(0, input.indexOf('_')));
-	System.out.print("_");
-	System.out.print(input.substring(input.indexOf('_') + 1, input.indexOf('/')));
-	int numerator1 = Integer.parseInt(input.substring(input.indexOf('_') + 1, input.indexOf('/')));
-	System.out.print("/");
-	System.out.println(input.substring(input.indexOf('/') + 1, input.length()));
-	int denominator1 = Integer.parseInt(input.substring(input.indexOf('/') + 1, input.length()));
-	int whole2 = Integer.parseInt(input.substring(input.indexOf('+') + 1, input.lastIndexOf('_')));
-	int numerator2 = Integer.parseInt(input.substring(input.lastIndexOf('_') + 1, input.lastIndexOf('/'))); 
-	int denominator2 = 
-	System.out.print("");
-
-} else if(input.contains("/")){
-System.out.print(input.substring(0,input.indexOf('/')));
-int numerator = Integer.parseInt(input.substring(0,input.indexOf('/')));
-System.out.print("/");
-System.out.println(input.substring(input.indexOf('/') + 1, input.length()));
-int denominator = Integer.parseInt(input.substring(input.indexOf('/') + 1, input.length()));
-} else {
-System.out.println(input.substring(0,input.length()));
-int whole = Integer.parseInt(input.substring(0, input.indexOf('_')));
-}*/
-//passer.close();
 
